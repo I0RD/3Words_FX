@@ -1,10 +1,13 @@
 package pl.programming;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
@@ -27,6 +30,7 @@ public class MainWindow extends Application {
     private final Button btnLonLat=new Button("Get Coordinates");
     private final Button btnWords=new Button("Get Words");
     private final Button btnRandom=new Button("Random Coordinates");
+    private final Hyperlink labelMap=new Hyperlink();
     private final GridPane root =new GridPane();
 
     @Override
@@ -43,6 +47,7 @@ public class MainWindow extends Application {
         GridPane.setMargin(textFieldLat,new Insets(5, 5, 5, 50));
         GridPane.setMargin(labelLong,new Insets(5, 5, 5, 50));
         GridPane.setMargin(textFieldLong,new Insets(5, 5, 5, 50));
+        GridPane.setMargin(labelMap,new Insets(5,5,5,50));
         GridPane.setMargin(combo,new Insets(5, 5, 5, 100));
         GridPane.setMargin(btnWords,new Insets(5, 5, 5, 50));
         GridPane.setMargin(btnLonLat,new Insets(5, 5, 5, 50));
@@ -56,7 +61,8 @@ public class MainWindow extends Application {
         root.add(textFieldLat,0,4);
         root.add(labelLong,0,5);
         root.add(textFieldLong,0,6);
-        root.add(combo,0,7);
+        root.add(labelMap,0,7);
+        root.add(combo,0,8);
         root.add(btnWords,1,3);
         btnWords.setOnAction(actionEvent ->  getWords());
         root.add(btnLonLat,1,4);
@@ -92,6 +98,7 @@ public class MainWindow extends Application {
         new Language("Dutch","nl"),
         new Language("Turkish","tr")
         );
+        labelMap.setOnAction(e -> getHostServices().showDocument(labelMap.getText()));
         combo.getSelectionModel().select(13);
         Scene mainScene = new Scene(root);
         stage.setScene(mainScene);
@@ -127,6 +134,7 @@ public class MainWindow extends Application {
                     {
                         String[] results=returned.split("\"");
                         textFieldWords.setText(results[31]);
+                        labelMap.setText(results[39]);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -150,6 +158,7 @@ public class MainWindow extends Application {
                     String[] results = returned.split("\"");
                     textFieldLong.setText(results[16].substring(1,results[16].indexOf('.')+3));
                     textFieldLat.setText(results[18].substring(1,results[18].indexOf('.')+3));
+                    labelMap.setText(results[39]);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
