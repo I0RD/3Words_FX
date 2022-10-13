@@ -1,4 +1,4 @@
-package pl.programming;
+package main.java.pl.programming;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,10 +8,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Connection {
-    private final URL url;
+    private URL url;
 
     public Connection(String url) throws MalformedURLException {
-        this.url=new URL(url);
+            this.url=new URL(url);
     }
     public String returnConnection() throws IOException {
         HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
